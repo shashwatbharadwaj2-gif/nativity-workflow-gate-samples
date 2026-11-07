@@ -1,0 +1,134 @@
+{
+  "sample_version": "1.0",
+  "checks_passed": 10,
+  "checks_failed": 0,
+  "limitations": [
+    "Synthetic deterministic rules only; no AI-model or production-security evaluation",
+    "Supplied access and duplicate fields are not trusted authentication or durable idempotency",
+    "No artwork inspection, prepress validation, price, delivery promise, or client outcome"
+  ],
+  "checks": [
+    {
+      "case": "complete",
+      "expected": "ready-for-review",
+      "result": {
+        "status": "ready-for-review",
+        "external_actions": 0,
+        "trace": [
+          "Envelope has a non-empty event identifier",
+          "Sample access gate passed",
+          "No duplicate found in the supplied list",
+          "Synthetic tool-availability gate passed",
+          "Required field types and values checked",
+          "No conflict in the compared reference fields",
+          "Estimator or production owner must review before any real action"
+        ],
+        "draft_ticket": {
+          "job_id": "PRINT-028",
+          "dimensions": "A5",
+          "stock": "150 gsm silk",
+          "finish": "Matt",
+          "quantity": 2000
+        }
+      },
+      "passed": true
+    },
+    {
+      "case": "missing-finish",
+      "expected": "more-information-needed",
+      "result": {
+        "status": "more-information-needed",
+        "external_actions": 0,
+        "trace": [
+          "Envelope has a non-empty event identifier",
+          "Sample access gate passed",
+          "No duplicate found in the supplied list",
+          "Synthetic tool-availability gate passed",
+          "Required specifications are missing or invalid"
+        ],
+        "missing_or_invalid": [
+          "finish"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "access-denied",
+      "expected": "access-denied",
+      "result": {
+        "status": "access-denied",
+        "external_actions": 0,
+        "trace": [
+          "Envelope has a non-empty event identifier",
+          "Access not permitted by the supplied sample field"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "conflicting-stock",
+      "expected": "conflict-held",
+      "result": {
+        "status": "conflict-held",
+        "external_actions": 0,
+        "trace": [
+          "Envelope has a non-empty event identifier",
+          "Sample access gate passed",
+          "No duplicate found in the supplied list",
+          "Synthetic tool-availability gate passed",
+          "Required field types and values checked",
+          "Brief disagrees with the supplied reference"
+        ],
+        "conflicting_fields": [
+          "stock"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "duplicate-event",
+      "expected": "duplicate-held",
+      "result": {
+        "status": "duplicate-held",
+        "external_actions": 0,
+        "trace": [
+          "Envelope has a non-empty event identifier",
+          "Sample access gate passed",
+          "Event already exists in the supplied processed-event list"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "tool-unavailable",
+      "expected": "tool-unavailable",
+      "result": {
+        "status": "tool-unavailable",
+        "external_actions": 0,
+        "trace": [
+          "Envelope has a non-empty event identifier",
+          "Sample access gate passed",
+          "No duplicate found in the supplied list",
+          "Required tool marked unavailable in the synthetic input"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "boolean-quantity",
+      "passed": true
+    },
+    {
+      "case": "fractional-quantity",
+      "passed": true
+    },
+    {
+      "case": "zero-quantity",
+      "passed": true
+    },
+    {
+      "case": "non-object-input",
+      "passed": true
+    }
+  ]
+}
